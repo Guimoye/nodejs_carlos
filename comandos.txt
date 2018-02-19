@@ -2,4 +2,17 @@
 //ubicacion mongo, correr exe, comando,direccion de carpeta
 H:\bin> .\mongod.exe --dbpath H:\Node\nodejs_carlos  //correr mongo db
 
+npm express --save //para guardar en modulo de paquete en json 
+
+npm install //para obtener nuevo proyecto que no tiene modulo de paquete
+npm install lodash // no es recomendable instalar modulos asi
+npm init // para crear el package
+npm i lodash --save // para gregar paquetes al modulo como dependencias
+npm install express --save
+npm uninstall lodash --save // para desinstalar un modulo
+npm i -D nodemon //para correr cualquier proyecto y ver la debugger en tiempo real
+npm i -g nodemon
+nodemon app.js 
+npm i -S body-parser //para parsear las peticiones de tipo rest
+
 
