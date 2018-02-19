@@ -1,0 +1,5 @@
+
+//ubicacion mongo, correr exe, comando,direccion de carpeta
+H:\bin> .\mongod.exe --dbpath H:\Node\nodejs_carlos  //correr mongo db
+
+

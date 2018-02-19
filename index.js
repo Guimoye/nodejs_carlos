@@ -1,7 +1,10 @@
 'use strict'
 
-const express = require('express');
-const bodyParser = require('body-parser');
+const express       = require('express');
+const bodyParser    = require('body-parser');
+const mongoose      = require('mongoose');
+
+const Product       = require('./models/product');
 
 const app = express();
 const port = process.env.PORT || 3002;
@@ -26,9 +29,15 @@ app.get('/api/product:productId',(req,res)=>{
 });
 
 app.post('/api/product',(req,res)=>{
+    // res.status(200).send({message:'El producto se ha recibido',obtuve: req.body});
+    console.log('POST /api/product');
     console.log(req.body);
-   // res.send(200,{message:'El producto se ha recibido',obtuve: req.body});
-    res.status(200).send({message:'El producto se ha recibido',obtuve: req.body});
+
+    //para almacenar en la bd
+    
+    let product = new Product();
+    product.
+
 
 });
 
@@ -40,6 +49,14 @@ app.delete('/api/product:productID',(req,res)=>{
 
 });
 
-app.listen(port,()=>{
-    console.log(`API REST corriendo en https://localhost:${port}`);
+mongoose.connect('mongodb://localhost:27017/shop',(err,res)=>{
+
+    if(err) throw err
+    console.log('Conexion a la bade de datos establecida');
+
+    app.listen(port,()=>{
+        console.log(`API REST corriendo en https://localhost:${port}`);
+    });
+
 });
+
