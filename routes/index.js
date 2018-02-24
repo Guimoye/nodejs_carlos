@@ -11,7 +11,7 @@ api.get('/product/:productId', productCtrl.getProduct)   //get con dos parametro
 api.post('/product', productCtrl.saveProduct) //post recibiendo y enviando datos
 api.put('/product/:productId', productCtrl.updateProduct) //modificar
 api.delete('/product/:productId', productCtrl.deleteProduct) //eliminar
-api.get('/private',auth.isAuth,function(req,res){
+api.get('/private',auth.isAuth,(req,res)=>{
     res.status(200).send({message:'Tienes acceso'})
 })
 

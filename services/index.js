@@ -14,4 +14,17 @@ function createToken(user){
     jwt.encode(payload,config.SECRET_TOKEN)
 }
 
+function decodeToken (token){
+    const decoded = new Promise((resolve,reject)=>{
+        try{
+            const payload = jwt.decode(token,config.SECRET_TOKEN)
+        }catch(err){
+            reject({
+                status:500,
+                message: 'Invalid Token'
+            })
+        }
+    })
+}
+
 module.exports = createToken
