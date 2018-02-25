@@ -1,77 +1,73 @@
-
 'use strict'
 
-const Product       = require('../models/product'); //sube una carpeta para buscar el modelo
+const Product = require('../models/product')
 
-function getProduct(req,res){
-    let productId = req.params.productId
+function getProduct (req, res) {
+  let productId = req.params.productId
 
-    Product.findById(productId, (err,product)=>{
-        if(err) res.status(500).send({message: `Error al realizar la peticion: ${err}`})
-        if(!product) res.status(404).send({message:`El producto no existe`})
-        res.status(200).send({product ,dio:req.params.nombre})
-    })
+  Product.findById(productId, (err, product) => {
+    if (err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
+    if (!product) return res.status(404).send({message: `El producto no existe`})
+
+    res.status(200).send({ product })
+  })
 }
 
-function getProducts(req,res){
-    Product.find({},(err,products)=>{
-        if(err) return res.status(500).send({message:`Error al realizar la peticion ${err}`})
-        if(!products) return res.status(404).send({message:'No existen productos'})
-        res.status(200).send({nombre:"javier",apellido:"guimoye",products});
-       })
+function getProducts (req, res) {
+  Product.find({}, (err, products) => {
+    if (err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
+    if (!products) return res.status(404).send({message: 'No existen productos'})
+
+    res.send(200, { products })
+  })
 }
 
-function saveProduct(req,res){
-    console.log('POST /api/product');
-    console.log(req.body);
-    
-    console.log('\nsalto');
-    console.log(res.body);
+function saveProduct (req, res) {
+  console.log('POST /api/product')
+  console.log(req.body)
 
-    //para almacenar en la bd
-    let product         = new Product()
-    product.name        = req.body.name
-    product.picture     = req.body.picture
-    product.price       = req.body.price
-    product.category    = req.body.category
-    product.description = req.body.description
+  let product = new Product()
+  product.name = req.body.name
+  product.picture = req.body.picture
+  product.price = req.body.price
+  product.category = req.body.category
+  product.description = req.body.description
 
-    product.save((err,productStored)=>{
-        if(err) res.status(500).send({message: `Error al salvar en la base de dato: ${err}`})
-        res.status(500).send({message:`hola`,product:productStored})
-    })
+  product.save((err, productStored) => {
+    if (err) res.status(500).send({message: `Error al salvar en la base de datos: ${err} `})
+
+    res.status(200).send({ product: productStored })
+  })
 }
 
-function updateProduct(req,res){
+function updateProduct (req, res) {
+  let productId = req.params.productId
+  let update = req.body
 
-    let productId   = req.params.productId
-    let update      = req.body
+  Product.findByIdAndUpdate(productId, update, (err, productUpdated) => {
+    if (err) res.status(500).send({message: `Error al actualizar el producto: ${err}`})
 
-    Product.findByIdAndUpdate(productId,update, (err,productUpdate)=>{
-        if(err) res.status(500).send({message: `Error al borrar el producto ${err}`})
-        res.status(200).send({product: productUpdate})
-        
-    })
-
+    res.status(200).send({ product: productUpdated })
+  })
 }
 
-function deleteProduct(req,res){
-    let productId = req.params.productId
+function deleteProduct (req, res) {
+  let productId = req.params.productId
 
-    Product.findById(productId,(err,product)=>{
-        if(err) res.status(500).send({message: `Error al borrar el producto ${err}`})
+  Product.findById(productId, (err, product) => {
+    if (err) res.status(500).send({message: `Error al borrar el producto: ${err}`})
 
-        product.remove(err =>{
-            if(err) res.status(500).send({message: `Error al borrar el producto ${err}`})
-            res.status(200).send({message: `el producto ha sido eliminado`})
-        })
+    product.remove(err => {
+      if (err) res.status(500).send({message: `Error al borrar el producto: ${err}`})
+      res.status(200).send({message: 'El producto ha sido eliminado'})
     })
+  })
 }
 
 module.exports = {
-    getProduct,
-    getProducts,
-    saveProduct,
-    updateProduct,
-    deleteProduct
+  getProduct,
+  getProducts,
+  saveProduct,
+  updateProduct,
+  deleteProduct
 }
